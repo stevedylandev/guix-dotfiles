@@ -2,7 +2,8 @@
 (use-service-modules desktop xorg networking ssh docker dbus shepherd)
 (use-package-modules bootloaders wm window-management text-editors fonts
                      terminals version-control ncurses gnuzilla xdisorg admin
-                     xorg compton lxde ssh golang docker containers rsync)
+                     xorg compton lxde ssh golang docker containers rsync emacs base
+                     shells)
 
 (operating-system
   (host-name "benson")
@@ -27,6 +28,7 @@
   (users (cons (user-account
                 (name "stevedylandev")
                 (group "users")
+                (shell (file-append zsh "/bin/zsh"))
                 ;; "docker" lets you run docker without sudo
                 (supplementary-groups '("wheel" "netdev" "audio" "video" "docker")))
                %base-user-accounts))
@@ -37,7 +39,7 @@
                      ;; xorg stuff
                      xorg-server xinit xwallpaper xset xrandr
                      ;; text editor
-                     vis
+                     vis emacs
                      ;; fonts
                      font-jetbrains-mono
                      ;; browser
@@ -60,6 +62,8 @@
                           (service elogind-service-type)
                           (service containerd-service-type)
                           (service docker-service-type)
+(extra-special-file "/lib64/ld-linux-x86-64.so.2"
+                    (file-append glibc "/lib/ld-linux-x86-64.so.2"))
 			(service tailscale-service-type)
 (simple-service 'cloudflared shepherd-root-service-type
   (list (shepherd-service
