@@ -25,6 +25,9 @@
                          (type "vfat")))
                  %base-file-systems))
 
+  (swap-devices (list (swap-space
+                        (target (uuid "10676fa5-e5a0-43b8-8316-e254ea56629e")))))
+
   (users (cons (user-account
                 (name "stevedylandev")
                 (group "users")
@@ -40,14 +43,12 @@
                      xorg-server xinit xwallpaper xset xrandr
                      ;; text editor
                      vis emacs
-                     ;; fonts
-                     font-jetbrains-mono
                      ;; browser
                      icecat
                      ;; terminal emulator
                      alacritty
                      ;; utils
-                     git btop ncurses openssh rsync
+                     git btop ncurses openssh rsync fastfetch
                      ;; dev
                      go
                      docker-cli
