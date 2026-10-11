@@ -3,6 +3,7 @@
 (use-modules (gnu home)
              (gnu home services)
              (gnu home services shells)
+             (gnu home services xdg)
              (gnu packages)
              (gnu services)
              (gnu system shadow)
@@ -29,11 +30,23 @@
 
      (service home-files-service-type
               `((".guile" ,%default-dotguile)
-                (".Xdefaults" ,%default-xdefaults)))
+                (".Xdefaults" ,%default-xdefaults)
+                ;; Emacs config files are linked into ~/.emacs.d so that
+                ;; elpa/ and other runtime state stay writable there.
+                (".emacs.d/early-init.el" ,(local-file "emacs/early-init.el"))
+                (".emacs.d/init.el" ,(local-file "emacs/init.el"))
+                (".emacs.d/org.css" ,(local-file "emacs/org.css"))
+                (".emacs.d/lisp" ,(local-file "emacs/lisp" #:recursive? #t))
+                (".emacs.d/themes" ,(local-file "emacs/themes" #:recursive? #t))))
 
      (service home-xdg-configuration-files-service-type
               `(("starship.toml" ,(local-file "starship/starship.toml"))
                 ("gdb/gdbinit" ,%default-gdbinit)
-                ("nano/nanorc" ,%default-nanorc))))
+                ("nano/nanorc" ,%default-nanorc)))
+
+     ;; ~/.local/share/fonts is on fontconfig's default search path
+     (service home-xdg-data-files-service-type
+              `(("fonts/BerkeleyMonoNerdFontMono-Regular.ttf"
+                 ,(local-file "fonts/BerkeleyMonoNerdFontMono-Regular.ttf")))))
 
     %base-home-services)))
