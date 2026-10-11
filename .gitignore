@@ -1,2 +1,5 @@
 # Licensed fonts: kept locally, not committed
 fonts/
+
+# Python bytecode
+__pycache__/
