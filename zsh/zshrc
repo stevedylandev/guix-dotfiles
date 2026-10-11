@@ -154,6 +154,8 @@ alias shitter='ssh itter'
 # alias keys='keysmasher'
 # alias timestamp='node -e "process.stdout.write(new Date().toISOString())"'
 alias e='emacsclient -nw'
+alias ghr='guix home reconfigure ~/guix-dotfiles/home.scm'
+alias gsr='sudo guix system reconfigure ~/guix-dotfiles/config.scm'
 
 # -------------------------------------------
 # Suffix Aliases - Open Files by Extension

@@ -32,7 +32,8 @@
                 (".Xdefaults" ,%default-xdefaults)))
 
      (service home-xdg-configuration-files-service-type
-              `(("gdb/gdbinit" ,%default-gdbinit)
+              `(("starship.toml" ,(local-file "starship/starship.toml"))
+                ("gdb/gdbinit" ,%default-gdbinit)
                 ("nano/nanorc" ,%default-nanorc))))
 
     %base-home-services)))
