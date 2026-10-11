@@ -17,7 +17,7 @@
          "zsh-syntax-highlighting"
          ;; tools the zshrc aliases/functions/init rely on
          "starship" "zoxide" "fzf" "fd" "bat" "eza" "jless"
-         "neovim" "fastfetch" "xclip"
+         "fastfetch" "xclip"
          ;; encryption and password management
          "gnupg" "pinentry" "password-store")))
 

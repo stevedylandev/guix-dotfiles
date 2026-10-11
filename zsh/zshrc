@@ -25,7 +25,7 @@ setopt share_history
 setopt hist_verify
 
 
-# vi mode (matches nushell edit_mode: vi)
+# vi mode
 set -o vi
 
 # Edit command in $EDITOR
@@ -36,7 +36,7 @@ bindkey '^O' edit-command-line
 # =============================================================================
 # Environment
 # =============================================================================
-export EDITOR="nvim"
+export EDITOR="emacs"
 export CLICOLOR=1
 export TERMINAL="alacritty"
 
@@ -103,34 +103,14 @@ path_add() {
 path_add "$HOME/.local/share/go/bin"
 # path_add "$BUN_INSTALL/bin"
 # path_add "$HOME/.tmux/plugins/t-smart-tmux-session-manager/bin"
-# path_add "$HOME/.deno/bin"
 # path_add "$HOME/.foundry/bin"
 path_add "$HOME/.local/share"
 # path_add "$HOME/.local/share/solana/install/active_release/bin"
-# path_add "$HOME/.aztec/bin"
-# path_add "$HOME/.nargo/bin"
-# path_add "$HOME/.helios/bin"
-# path_add "$HOME/.radicle/bin"
 # path_add "$HOME/.local/share/fnm"
 # path_add "$PNPM_HOME"
 path_add "$HOME/.local/bin"
 
 export PATH
-
-# fnm (node version manager, not packaged in Guix)
-# if command -v fnm >/dev/null 2>&1; then
-#   eval "$(fnm env --shell zsh)"
-#   path_add "$FNM_MULTISHELL_PATH/bin"
-#   export PATH
-#   # auto-switch node version on cd when .node-version / .nvmrc present
-#   __fnm_autouse() {
-#     if [ -f .node-version ] || [ -f .nvmrc ]; then
-#       fnm use --silent-if-unchanged 2>/dev/null
-#     fi
-#   }
-#   autoload -Uz add-zsh-hook
-#   add-zsh-hook precmd __fnm_autouse
-# fi
 
 # cargo
 # [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
@@ -147,98 +127,17 @@ alias fl='fastfetch -c ~/.config/fastfetch/presets/examples/8.jsonc'
 alias ff='fastfetch -c ~/.config/fastfetch/presets/examples/20.jsonc'
 alias nvimrc='nvim ~/.config/nvim'
 alias shitter='ssh itter'
-# alias ai='aichat'
 # alias system='macchina'
 # alias bonsai='cbonsai -li -t 0.4'
 # alias lst='lstr --icons --color=always --size'
-# alias keys='keysmasher'
 # alias timestamp='node -e "process.stdout.write(new Date().toISOString())"'
 alias e='emacsclient -nw'
 alias ghr='guix home reconfigure ~/guix-dotfiles/home.scm'
 alias gsr='sudo guix system reconfigure ~/guix-dotfiles/config.scm'
 
-# -------------------------------------------
-# Suffix Aliases - Open Files by Extension
-# -------------------------------------------
-# Just type the filename to open it with the associated program
-alias -s json=jless
-alias -s md=bat
-alias -s go='$EDITOR'
-alias -s rs='$EDITOR'
-alias -s txt=bat
-alias -s log=bat
-alias -s py='$EDITOR'
-alias -s js='$EDITOR'
-alias -s ts='$EDITOR'
-alias -s html=xdg-open
-
 # =============================================================================
 # Functions
 # =============================================================================
-# Open a sesh session via gum filter
-# t() {
-#   local selected
-#   selected=$(sesh list -i | gum filter --limit 1 --placeholder "Choose a session" --height 50 --prompt="> " --indicator.foreground="2" --match.foreground="2")
-#   if [ -z "$selected" ]; then
-#     echo "No session selected"
-#   else
-#     sesh connect "$selected"
-#   fi
-# }
-
-# Fuzzy-find a file and open in nvim
-nvimf() {
-  local file
-  file=$(fd --type f --hidden --exclude .git | fzf --preview "bat --color=always {}")
-  if [ -z "$file" ]; then
-    echo "No file selected"
-  else
-    nvim "$file"
-  fi
-}
-
-# Install a tree-sitter parser into the nvim luarocks tree
-# tsi() {
-#   local parser="$1"
-#   local tree="$HOME/.local/share/nvim/site"
-#   luarocks --lua-version=5.1 "--tree=$tree" install "tree-sitter-$parser"
-# }
-
-# nvim startup time -> grep summary line
-ns() {
-  rm -f ~/.nvim-startup.txt
-  nvim --headless --startuptime ~/.nvim-startup.txt +qa
-  grep "NVIM STARTED" ~/.nvim-startup.txt
-}
-
-# nvim startup time -> full bat dump
-nh() {
-  rm -f ~/.nvim-startup.txt
-  nvim --headless --startuptime ~/.nvim-startup.txt +qa
-  bat ~/.nvim-startup.txt
-}
-
-# Copy file contents to clipboard
-cpf() {
-  xclip -selection clipboard < "$1"
-  echo "✔︎ Copied to clipboard!"
-}
-
-# Set orbiter key to personal
-# orbiter-personal() {
-#   gum spin --spinner dot --spinner.foreground="2" --title "Updating..." -- orbiter auth --key "$(op read 'op://Personal/orbiter-api-key/credential')"
-#   local check
-#   check=$(gum style --foreground="2" "✓ ")
-#   gum join "$check" "Orbiter key set to personal!"
-# }
-
-# Set orbiter key to orbiter account
-# orbiter-account() {
-#   gum spin --spinner dot --spinner.foreground="2" --title "Updating..." -- orbiter auth --key "$(op read 'op://Personal/orbiter-account-api-key/credential')"
-#   local check
-#   check=$(gum style --foreground="2" "✓ ")
-#   gum join "$check" "Orbiter key set to Orbiter account!"
-# }
 
 # UTC timestamp for blog frontmatter
 blogdate() {
