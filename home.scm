@@ -3,6 +3,7 @@
 (use-modules (gnu home)
              (gnu home services)
              (gnu home services shells)
+             (gnu home services gnupg)
              (gnu home services xdg)
              (gnu packages)
              (gnu services)
@@ -16,7 +17,9 @@
          "zsh-syntax-highlighting"
          ;; tools the zshrc aliases/functions/init rely on
          "starship" "zoxide" "fzf" "fd" "bat" "eza" "jless"
-         "neovim" "fastfetch" "xclip")))
+         "neovim" "fastfetch" "xclip"
+         ;; encryption and password management
+         "gnupg" "pinentry" "password-store")))
 
 (home-environment
   (packages %zsh-packages)
@@ -27,6 +30,13 @@
      (service home-zsh-service-type
               (home-zsh-configuration
                (zshrc (list (local-file "zsh/zshrc")))))
+
+     ;; pinentry uses GTK under X and falls back to curses otherwise
+     (service home-gpg-agent-service-type
+              (home-gpg-agent-configuration
+               (pinentry-program
+                (file-append (specification->package "pinentry")
+                             "/bin/pinentry"))))
 
      (service home-files-service-type
               `((".guile" ,%default-dotguile)

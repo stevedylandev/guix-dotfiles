@@ -36,7 +36,7 @@
   (erc-tls :server "138.197.115.89"
            :port 6697
            :nick "stevedylandev_"
-           :user (my/soju-user "erc")
+           :user (my/soju-user "erc-benson")
            :password (my/soju-password)))
 
 (provide 'init-erc)
