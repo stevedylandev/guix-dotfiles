@@ -71,6 +71,11 @@
           (provision '(cloudflared))
           (requirement '(networking))
           (documentation "Run the Cloudflare tunnel.")
+          ;; 'networking' is up as soon as dhcpcd is spawned, before it has a
+          ;; lease, so cloudflared can exit at boot. Wait between respawns so
+          ;; it keeps retrying instead of hitting the respawn limit (5 in 7s)
+          ;; and getting disabled.
+          (respawn-delay 5)
           (start #~(make-forkexec-constructor
                     (list #$(file-append (specification->package "cloudflared")
                                          "/bin/cloudflared")
