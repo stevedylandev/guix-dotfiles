@@ -45,9 +45,9 @@
 
  (packages (append (list
                     ;; window managers
-                    qtile cwm rofi
-                    ;; xorg stuff
-                    xorg-server xinit xwallpaper xset xrandr feh
+                    qtile sway rofi
+                    ;; wayland stuff
+                    swaybg swayidle swaylock wl-clipboard
                     ;; text editor
                     vis emacs
                     ;; browser
@@ -62,8 +62,21 @@
                     (specification->package "cloudflared")) ; from Rosenthal channel
                    %base-packages))
 
- (services (append (list (service xorg-server-service-type)
-                         (service slim-service-type)
+ (services (append (list (service greetd-service-type
+                                  (greetd-configuration
+                                   (terminals
+                                    (list
+                                     ;; Text login on tty7 that starts sway
+                                     (greetd-terminal-configuration
+                                      (terminal-vt "7")
+                                      (terminal-switch #t)
+                                      (default-session-command
+                                        (greetd-agreety-session
+                                         (command
+                                          (greetd-user-session
+                                           (command (file-append sway "/bin/sway"))
+                                           (command-args '())
+                                           (xdg-session-type "wayland"))))))))))
                          (service dhcpcd-service-type)
                          (service dbus-root-service-type)
                          (service elogind-service-type)
