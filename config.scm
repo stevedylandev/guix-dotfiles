@@ -1,5 +1,6 @@
-(use-modules (gnu) (gnu system nss) (guix gexp) (rosenthal services networking))
-(use-service-modules desktop xorg networking ssh docker dbus shepherd)
+(use-modules (gnu) (gnu system nss) (guix gexp) (rosenthal services networking)
+             (nongnu packages linux) (nongnu system linux-initrd))
+(use-service-modules base desktop xorg networking ssh docker dbus shepherd)
 (use-package-modules bootloaders wm window-management text-editors fonts
                      terminals version-control ncurses gnuzilla xdisorg admin
                      xorg compton lxde ssh golang docker containers rsync emacs base
@@ -9,6 +10,12 @@
   (host-name "benson")
   (timezone "America/New_York")
   (locale "en_US.utf8")
+
+  ;; Mainline kernel + firmware from nonguix; linux-libre can't load the
+  ;; amdgpu blobs the Radeon 780M (Phoenix) needs.
+  (kernel linux)
+  (initrd microcode-initrd)
+  (firmware (list amdgpu-firmware amd-microcode))
 
   (bootloader (bootloader-configuration
                 (bootloader grub-efi-bootloader)
@@ -92,4 +99,13 @@
                                     (authorized-keys
                                      `(("stevedylandev"
                                         ,(local-file "/home/stevedylandev/.ssh/authorized_keys")))))))
-                    %base-services)))
+                    (modify-services %base-services
+                      (guix-service-type
+                       config => (guix-configuration
+                                  (inherit config)
+                                  (authorized-keys
+                                   (cons (local-file "nonguix-signing-key.pub")
+                                         %default-authorized-guix-keys))
+                                  (substitute-urls
+                                   (append (list "https://substitutes.nonguix.org")
+                                           %default-substitute-urls))))))))
