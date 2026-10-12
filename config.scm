@@ -4,7 +4,7 @@
  (use-package-modules bootloaders wm window-management text-editors fonts
                      terminals version-control ncurses xdisorg admin
                      xorg compton lxde ssh golang docker containers rsync emacs base
-                     shells image-viewers librewolf tmux)
+                     shells image-viewers librewolf tmux python)
 
 (operating-system
  (host-name "benson")
@@ -58,6 +58,7 @@
                     git btop ncurses openssh rsync fastfetch tmux
                     ;; dev
                     go
+                    python ; provides python3 and pip3
                     docker-cli
                     (specification->package "cloudflared")) ; from Rosenthal channel
                    %base-packages))

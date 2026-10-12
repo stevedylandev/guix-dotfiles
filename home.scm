@@ -32,8 +32,13 @@
          "lua-language-server"
          "python-lsp-server")))
 
+;; Language runtimes; Guix's "python" package provides python3 and pip3
+(define %lang-packages
+  (specifications->packages
+   (list "python")))
+
 (home-environment
- (packages (append %zsh-packages %lsp-packages))
+ (packages (append %zsh-packages %lsp-packages %lang-packages))
 
  (services
   (append
