@@ -41,6 +41,8 @@
      (service home-files-service-type
               `((".guile" ,%default-dotguile)
                 (".Xdefaults" ,%default-xdefaults)
+                (".xsession" ,(local-file "xsession/xsession" #:recursive? #t))
+                (".cwmrc" ,(local-file "cwm/cwmrc"))
                 ;; Emacs config files are linked into ~/.emacs.d so that
                 ;; elpa/ and other runtime state stay writable there.
                 (".emacs.d/early-init.el" ,(local-file "emacs/early-init.el"))
@@ -52,6 +54,7 @@
      (service home-xdg-configuration-files-service-type
               `(("starship.toml" ,(local-file "starship/starship.toml"))
                 ("alacritty/alacritty.toml" ,(local-file "alacritty/alacritty.toml"))
+                ("kitty/kitty.conf" ,(local-file "kitty/kitty.conf"))
                 ("qtile/config.py" ,(local-file "qtile/config.py"))
                 ("gdb/gdbinit" ,%default-gdbinit)
                 ("nano/nanorc" ,%default-nanorc)))

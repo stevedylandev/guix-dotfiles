@@ -3,7 +3,7 @@
 (use-package-modules bootloaders wm window-management text-editors fonts
                      terminals version-control ncurses gnuzilla xdisorg admin
                      xorg compton lxde ssh golang docker containers rsync emacs base
-                     shells)
+                     shells image-viewers)
 
 (operating-system
   (host-name "benson")
@@ -38,15 +38,15 @@
 
   (packages (append (list
                      ;; window managers
-                     qtile rofi
+                     qtile cwm rofi
                      ;; xorg stuff
-                     xorg-server xinit xwallpaper xset xrandr
+                     xorg-server xinit xwallpaper xset xrandr feh
                      ;; text editor
                      vis emacs
                      ;; browser
                      icecat
                      ;; terminal emulator
-                     alacritty
+                     alacritty kitty
                      ;; utils
                      git btop ncurses openssh rsync fastfetch
                      ;; dev
