@@ -3,3 +3,6 @@ fonts/
 
 # Python bytecode
 __pycache__/
+
+# Built LibreWolf theme (librewolf/build-theme.sh)
+librewolf/*.xpi

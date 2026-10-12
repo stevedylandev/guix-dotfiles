@@ -1,0 +1,55 @@
+{
+  "manifest_version": 2,
+  "name": "Darkmatter",
+  "version": "1.0",
+  "description": "Darkmatter palette, matching the GTK, kitty, sway, and emacs themes.",
+  "browser_specific_settings": {
+    "gecko": { "id": "darkmatter@stevedylan.dev" }
+  },
+  "theme": {
+    "colors": {
+      "frame": "#121113",
+      "frame_inactive": "#121113",
+      "tab_background_text": "#999999",
+      "tab_selected": "#222222",
+      "tab_text": "#c1c1c1",
+      "tab_line": "#fbcb97",
+      "tab_loading": "#e78a53",
+      "tab_background_separator": "#333333",
+      "toolbar": "#222222",
+      "toolbar_text": "#c1c1c1",
+      "toolbar_top_separator": "#121113",
+      "toolbar_bottom_separator": "#121113",
+      "toolbar_vertical_separator": "#333333",
+      "toolbar_field": "#121113",
+      "toolbar_field_text": "#c1c1c1",
+      "toolbar_field_border": "#333333",
+      "toolbar_field_focus": "#121113",
+      "toolbar_field_text_focus": "#c1c1c1",
+      "toolbar_field_border_focus": "#fbcb97",
+      "toolbar_field_highlight": "#e78a53",
+      "toolbar_field_highlight_text": "#121113",
+      "icons": "#c1c1c1",
+      "icons_attention": "#e78a53",
+      "button_background_hover": "#333333",
+      "button_background_active": "#444444",
+      "popup": "#121113",
+      "popup_text": "#c1c1c1",
+      "popup_border": "#333333",
+      "popup_highlight": "#333333",
+      "popup_highlight_text": "#fbcb97",
+      "sidebar": "#121113",
+      "sidebar_text": "#c1c1c1",
+      "sidebar_border": "#333333",
+      "sidebar_highlight": "#333333",
+      "sidebar_highlight_text": "#fbcb97",
+      "ntp_background": "#121113",
+      "ntp_text": "#c1c1c1",
+      "ntp_card_background": "#222222"
+    },
+    "properties": {
+      "color_scheme": "dark",
+      "content_color_scheme": "dark"
+    }
+  }
+}
