@@ -21,47 +21,56 @@
          ;; encryption and password management
          "gnupg" "pinentry" "password-store")))
 
+;; Language servers that emacs/lisp/init-lang.el starts through eglot
+(define %lsp-packages
+  (specifications->packages
+   (list "guile-lsp-server"
+         "rust-analyzer"
+         "gopls"
+         "lua-language-server"
+         "python-lsp-server")))
+
 (home-environment
-  (packages %zsh-packages)
+ (packages (append %zsh-packages %lsp-packages))
 
-  (services
-   (append
-    (list
-     (service home-zsh-service-type
-              (home-zsh-configuration
-               (zshrc (list (local-file "zsh/zshrc")))))
+ (services
+  (append
+   (list
+    (service home-zsh-service-type
+             (home-zsh-configuration
+              (zshrc (list (local-file "zsh/zshrc")))))
 
-     ;; pinentry uses GTK under X and falls back to curses otherwise
-     (service home-gpg-agent-service-type
-              (home-gpg-agent-configuration
-               (pinentry-program
-                (file-append (specification->package "pinentry")
-                             "/bin/pinentry"))))
+    ;; pinentry uses GTK under X and falls back to curses otherwise
+    (service home-gpg-agent-service-type
+             (home-gpg-agent-configuration
+              (pinentry-program
+               (file-append (specification->package "pinentry")
+                            "/bin/pinentry"))))
 
-     (service home-files-service-type
-              `((".guile" ,%default-dotguile)
-                (".Xdefaults" ,%default-xdefaults)
-                (".xsession" ,(local-file "xsession/xsession" #:recursive? #t))
-                (".cwmrc" ,(local-file "cwm/cwmrc"))
-                ;; Emacs config files are linked into ~/.emacs.d so that
-                ;; elpa/ and other runtime state stay writable there.
-                (".emacs.d/early-init.el" ,(local-file "emacs/early-init.el"))
-                (".emacs.d/init.el" ,(local-file "emacs/init.el"))
-                (".emacs.d/org.css" ,(local-file "emacs/org.css"))
-                (".emacs.d/lisp" ,(local-file "emacs/lisp" #:recursive? #t))
-                (".emacs.d/themes" ,(local-file "emacs/themes" #:recursive? #t))))
+    (service home-files-service-type
+             `((".guile" ,%default-dotguile)
+               (".Xdefaults" ,%default-xdefaults)
+               (".xsession" ,(local-file "xsession/xsession" #:recursive? #t))
+               (".cwmrc" ,(local-file "cwm/cwmrc"))
+               ;; Emacs config files are linked into ~/.emacs.d so that
+               ;; elpa/ and other runtime state stay writable there.
+               (".emacs.d/early-init.el" ,(local-file "emacs/early-init.el"))
+               (".emacs.d/init.el" ,(local-file "emacs/init.el"))
+               (".emacs.d/org.css" ,(local-file "emacs/org.css"))
+               (".emacs.d/lisp" ,(local-file "emacs/lisp" #:recursive? #t))
+               (".emacs.d/themes" ,(local-file "emacs/themes" #:recursive? #t))))
 
-     (service home-xdg-configuration-files-service-type
-              `(("starship.toml" ,(local-file "starship/starship.toml"))
-                ("alacritty/alacritty.toml" ,(local-file "alacritty/alacritty.toml"))
-                ("kitty/kitty.conf" ,(local-file "kitty/kitty.conf"))
-                ("qtile/config.py" ,(local-file "qtile/config.py"))
-                ("gdb/gdbinit" ,%default-gdbinit)
-                ("nano/nanorc" ,%default-nanorc)))
+    (service home-xdg-configuration-files-service-type
+             `(("starship.toml" ,(local-file "starship/starship.toml"))
+               ("alacritty/alacritty.toml" ,(local-file "alacritty/alacritty.toml"))
+               ("kitty/kitty.conf" ,(local-file "kitty/kitty.conf"))
+               ("qtile/config.py" ,(local-file "qtile/config.py"))
+               ("gdb/gdbinit" ,%default-gdbinit)
+               ("nano/nanorc" ,%default-nanorc)))
 
-     ;; ~/.local/share/fonts is on fontconfig's default search path
-     (service home-xdg-data-files-service-type
-              `(("fonts/BerkeleyMonoNerdFontMono-Regular.ttf"
-                 ,(local-file "fonts/BerkeleyMonoNerdFontMono-Regular.ttf")))))
+    ;; ~/.local/share/fonts is on fontconfig's default search path
+    (service home-xdg-data-files-service-type
+             `(("fonts/BerkeleyMonoNerdFontMono-Regular.ttf"
+                ,(local-file "fonts/BerkeleyMonoNerdFontMono-Regular.ttf")))))
 
-    %base-home-services)))
+   %base-home-services)))
