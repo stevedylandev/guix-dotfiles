@@ -64,6 +64,9 @@
                ("kitty/kitty.conf" ,(local-file "kitty/kitty.conf"))
                ("sway/config" ,(local-file "sway/config"))
                ("qtile/config.py" ,(local-file "qtile/config.py"))
+               ("rofi/config.rasi" ,(local-file "rofi/config.rasi"))
+               ("rofi/darkmatter.rasi" ,(local-file "rofi/darkmatter.rasi"))
+               ("tmux/tmux.conf" ,(local-file "tmux/tmux.conf"))
                ("gdb/gdbinit" ,%default-gdbinit)
                ("nano/nanorc" ,%default-nanorc)))
 
