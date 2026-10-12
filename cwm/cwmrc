@@ -24,7 +24,7 @@ color selfont "#121113"
 # Applications (shown in the M-? application menu)
 command term  kitty
 command emacs emacs
-command icecat icecat
+command librewolf librewolf
 command btop  "kitty btop"
 
 # Start with a clean slate; only the bindings below are active
@@ -37,6 +37,7 @@ bind-key 4-d      "rofi -show drun"
 bind-key 4-space  menu-exec
 bind-key 4-slash  menu-cmd
 bind-key 4-Tab    menu-window
+bind-key 4-b      "librewolf"
 
 # Window actions
 bind-key 4-w      window-close
@@ -118,4 +119,4 @@ bind-mouse 1 menu-window
 bind-mouse 3 menu-cmd
 
 # Pin apps to a group: autogroup <group> "instance,class" (see xprop WM_CLASS)
-# autogroup 2 "Navigator,firefox"
+# autogroup 2 "librewolf"

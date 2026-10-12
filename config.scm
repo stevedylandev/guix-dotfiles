@@ -2,9 +2,9 @@
              (nongnu packages linux) (nongnu system linux-initrd))
 (use-service-modules base desktop xorg networking ssh docker dbus shepherd)
 (use-package-modules bootloaders wm window-management text-editors fonts
-                     terminals version-control ncurses gnuzilla xdisorg admin
+                     terminals version-control ncurses xdisorg admin
                      xorg compton lxde ssh golang docker containers rsync emacs base
-                     shells image-viewers)
+                     shells image-viewers librewolf)
 
 (operating-system
  (host-name "benson")
@@ -51,7 +51,7 @@
                     ;; text editor
                     vis emacs
                     ;; browser
-                    icecat
+                    librewolf
                     ;; terminal emulator
                     alacritty kitty
                     ;; utils
