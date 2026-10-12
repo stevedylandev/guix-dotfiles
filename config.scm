@@ -1,10 +1,10 @@
 (use-modules (gnu) (gnu system nss) (guix gexp) (rosenthal services networking)
              (nongnu packages linux) (nongnu system linux-initrd))
 (use-service-modules base desktop xorg networking ssh docker dbus shepherd)
-(use-package-modules bootloaders wm window-management text-editors fonts
+ (use-package-modules bootloaders wm window-management text-editors fonts
                      terminals version-control ncurses xdisorg admin
                      xorg compton lxde ssh golang docker containers rsync emacs base
-                     shells image-viewers librewolf)
+                     shells image-viewers librewolf tmux)
 
 (operating-system
  (host-name "benson")
@@ -55,7 +55,7 @@
                     ;; terminal emulator
                     alacritty kitty
                     ;; utils
-                    git btop ncurses openssh rsync fastfetch
+                    git btop ncurses openssh rsync fastfetch tmux
                     ;; dev
                     go
                     docker-cli

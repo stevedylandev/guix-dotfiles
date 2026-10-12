@@ -18,6 +18,8 @@
          ;; tools the zshrc aliases/functions/init rely on
          "starship" "zoxide" "fzf" "fd" "bat" "eza" "jless"
          "fastfetch" "xclip"
+         ;; terminal multiplexer; tmux.conf uses xdg-open for `prefix o`
+         "tmux" "xdg-utils"
          ;; encryption and password management
          "gnupg" "pinentry" "password-store")))
 
