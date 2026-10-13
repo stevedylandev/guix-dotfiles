@@ -58,7 +58,7 @@
                     ;; browser
                     librewolf
                     ;; terminal emulator
-                    alacritty kitty
+                    kitty
                     ;; utils
                     git btop ncurses openssh rsync fastfetch tmux
                     ;; dev

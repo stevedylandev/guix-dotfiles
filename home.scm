@@ -58,7 +58,6 @@
 
     (service home-xdg-configuration-files-service-type
              `(("starship.toml" ,(local-file "starship/starship.toml"))
-               ("alacritty/alacritty.toml" ,(local-file "alacritty/alacritty.toml"))
                ("kitty/kitty.conf" ,(local-file "kitty/kitty.conf"))
                ("sway/config" ,(local-file "sway/config"))
                ("qtile/config.py" ,(local-file "qtile/config.py"))

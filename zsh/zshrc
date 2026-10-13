@@ -38,7 +38,7 @@ bindkey '^O' edit-command-line
 # =============================================================================
 export EDITOR="emacs"
 export CLICOLOR=1
-export TERMINAL="alacritty"
+export TERMINAL="kitty"
 
 # Go
 export GOPATH="$HOME/.local/share/go"
