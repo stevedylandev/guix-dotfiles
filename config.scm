@@ -1,10 +1,16 @@
-(use-modules (gnu) (gnu system nss) (guix gexp) (rosenthal services networking)
+(use-modules (gnu)
+             (gnu system nss)
+             (guix gexp)
+             (rosenthal services networking)
              (nongnu packages linux) (nongnu system linux-initrd))
+
 (use-service-modules base desktop xorg networking ssh docker dbus shepherd)
- (use-package-modules bootloaders wm window-management text-editors fonts
-                     terminals version-control ncurses xdisorg admin
-                     xorg compton lxde ssh golang docker containers rsync emacs base
-                     shells image-viewers librewolf tmux python)
+
+(use-package-modules bootloaders wm window-management text-editors fonts
+                     terminals version-control ncurses admin
+                     compton lxde ssh golang docker containers
+                     rsync emacs base shells image-viewers librewolf
+                     tmux python)
 
 (operating-system
  (host-name "benson")
@@ -39,8 +45,7 @@
                (name "stevedylandev")
                (group "users")
                (shell (file-append zsh "/bin/zsh"))
-               ;; "docker" lets you run docker without sudo
-               (supplementary-groups '("wheel" "netdev" "audio" "video" "docker")))
+               (supplementary-groups '("wheel" "netdev" "audio" "video" )))
               %base-user-accounts))
 
  (packages (append (list
@@ -58,7 +63,7 @@
                     git btop ncurses openssh rsync fastfetch tmux
                     ;; dev
                     go
-                    python ; provides python3 and pip3
+                    python
                     docker-cli
                     (specification->package "cloudflared")) ; from Rosenthal channel
                    %base-packages))

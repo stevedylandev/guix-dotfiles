@@ -1,5 +1,4 @@
-;; Guix Home configuration for stevedylandev.
-;; Apply with: guix home reconfigure ~/guix-dotfiles/home.scm
+;; Guix Home configuration
 (use-modules (gnu home)
              (gnu home services)
              (gnu home services shells)
@@ -15,15 +14,11 @@
    (list "zsh"
          "zsh-autosuggestions"
          "zsh-syntax-highlighting"
-         ;; tools the zshrc aliases/functions/init rely on
          "starship" "zoxide" "fzf" "fd" "bat" "eza" "jless"
          "fastfetch" "xclip"
-         ;; terminal multiplexer; tmux.conf uses xdg-open for `prefix o`
          "tmux" "xdg-utils"
-         ;; encryption and password management
          "gnupg" "pinentry" "password-store")))
 
-;; Language servers that emacs/lisp/init-lang.el starts through eglot
 (define %lsp-packages
   (specifications->packages
    (list "guile-lsp-server"
@@ -32,7 +27,6 @@
          "lua-language-server"
          "python-lsp-server")))
 
-;; Language runtimes; Guix's "python" package provides python3 and pip3
 (define %lang-packages
   (specifications->packages
    (list "python")))
@@ -57,11 +51,8 @@
     (service home-files-service-type
              `((".guile" ,%default-dotguile)
                (".Xdefaults" ,%default-xdefaults)
-               ;; Emacs config files are linked into ~/.emacs.d so that
-               ;; elpa/ and other runtime state stay writable there.
                (".emacs.d/early-init.el" ,(local-file "emacs/early-init.el"))
                (".emacs.d/init.el" ,(local-file "emacs/init.el"))
-               (".emacs.d/org.css" ,(local-file "emacs/org.css"))
                (".emacs.d/lisp" ,(local-file "emacs/lisp" #:recursive? #t))
                (".emacs.d/themes" ,(local-file "emacs/themes" #:recursive? #t))))
 
@@ -77,7 +68,6 @@
                ("gdb/gdbinit" ,%default-gdbinit)
                ("nano/nanorc" ,%default-nanorc)))
 
-    ;; ~/.local/share/fonts is on fontconfig's default search path
     (service home-xdg-data-files-service-type
              `(("fonts/BerkeleyMonoNerdFontMono-Regular.ttf"
                 ,(local-file "fonts/BerkeleyMonoNerdFontMono-Regular.ttf")))))
