@@ -8,7 +8,7 @@
 
 (use-package-modules bootloaders wm window-management text-editors fonts
                      terminals version-control ncurses admin
-                     compton lxde ssh golang docker containers
+                     compton lxde ssh golang docker containers xdisorg
                      rsync emacs base shells image-viewers librewolf
                      tmux python)
 
