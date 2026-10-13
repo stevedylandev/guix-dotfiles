@@ -4,12 +4,10 @@
 ;; make and pkg-config on PATH (4.x dropped mbedtls/aes.h).
 (use-package jabber
   :vc (:url "https://git.thanosapollo.org/emacs-jabber"
-       :lisp-dir "lisp"
-       :shell-command "MBED_STATIC=1 make module")
+            :lisp-dir "lisp"
+            :shell-command "MBED_STATIC=1 make module")
   :defer t
   :init
-  ;; `jabber-roster' autoloads from jabber-roster-menu, which never loads
-  ;; jabber.el, so :config (account list) would never run. Pull it in.
   (with-eval-after-load 'jabber-roster-menu (require 'jabber))
   :config
   (setq jabber-account-list

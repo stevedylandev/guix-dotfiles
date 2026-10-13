@@ -1,6 +1,5 @@
 ;;; early-init.el -*- lexical-binding: t; -*-
 
-;; Faster startup: defer GC, restore after init
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 1.0)
 (add-hook 'emacs-startup-hook
