@@ -14,7 +14,7 @@
 (setq package-archives '(("gnu"    . "https://elpa.gnu.org/packages/")
                          ("nongnu" . "https://elpa.nongnu.org/nongnu/")
                          ("melpa"  . "https://melpa.org/packages/")))
-(unless package-archive-contents (package-refresh-contents))
+;; No refresh here: use-package :ensure refreshes on its own when a package is missing.
 (setq use-package-always-ensure t)
 
 (require 'init-defaults)

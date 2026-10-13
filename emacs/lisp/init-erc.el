@@ -1,7 +1,5 @@
 ;;; init-erc.el -*- lexical-binding: t; -*-
 
-(require 'auth-source-pass)
-
 ;; soju password: read from `pass' (gpg-encrypted), cached in memory per session
 (defvar my/soju-pass-entry "irc/soju")
 (defvar my/soju--password nil)

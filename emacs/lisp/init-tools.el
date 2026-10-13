@@ -1,6 +1,7 @@
 ;;; init-tools.el -*- lexical-binding: t; -*-
 
-(use-package magit)
+(use-package magit
+  :defer t)
 
 (use-package diff-hl
   :hook ((after-init . global-diff-hl-mode)
@@ -27,6 +28,7 @@
    '(diff-hl-margin-delete ((t (:foreground "#aa6c6c" :background unspecified :weight bold))))))
 
 (use-package elfeed
+  :defer t
   :config
   (setq-default elfeed-search-filter "@6-months-ago")
 
@@ -60,12 +62,15 @@ Keeps the current list if the fetch fails."
     (face-remap-add-relative 'default :family "BerkeleyMono Nerd Font Mono" :height 140))
   (add-hook 'elfeed-show-mode-hook #'my/elfeed-show-font))
 
-;; ob-go isn't bundled with org; must load before org-babel-do-load-languages
-(use-package ob-go)
+;; ob-go isn't bundled with org; required in org's :config below
+(use-package ob-go
+  :defer t)
 
 (use-package org
   :ensure nil
+  :defer t
   :config
+  (require 'ob-go)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((js    . t)
@@ -126,7 +131,8 @@ Keeps the current list if the fetch fails."
     "l" 'dired-find-file
     "q" 'quit-window))
 
-(require 'posts)
-(require 'uguu)
+(autoload 'posts-compose "posts" nil t)
+(autoload 'uguu-upload-file "uguu" nil t)
+(autoload 'uguu-upload-clipboard "uguu" nil t)
 
 (provide 'init-tools)

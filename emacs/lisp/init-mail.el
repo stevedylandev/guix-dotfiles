@@ -41,12 +41,11 @@
 ;; Proton Bridge rewrites PGP/MIME into multipart/mixed with the armored
 ;; block as an attachment, so Emacs won't auto-decrypt. Pull the block out
 ;; of the raw message and decrypt it by hand.
-(require 'mm-decode)
-(require 'epg)
-(require 'cl-lib)
+(require 'cl-lib)                       ; cl-labels, expanded at load time
 
 (defun my/mail--pgp-blocks (path)
   "Return armored PGP message strings found in the parts of PATH."
+  (require 'mm-decode)
   (with-temp-buffer
     (insert-file-contents-literally path)
     (let (blocks)
@@ -63,6 +62,7 @@
 (defun my/mail-decrypt-bridge ()
   "Decrypt the PGP block of the mu4e message at point into a buffer."
   (interactive)
+  (require 'epg)
   (let* ((msg (mu4e-message-at-point))
          (blocks (or (my/mail--pgp-blocks (mu4e-message-field msg :path))
                      (user-error "No PGP block in message")))

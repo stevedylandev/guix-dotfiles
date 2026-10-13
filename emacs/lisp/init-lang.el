@@ -23,18 +23,22 @@
 
 (use-package eglot
   :ensure nil
+  :defer t
   :custom
   (eglot-autoshutdown t)                ; kill server when last buffer closes
   (eglot-events-buffer-config '(:size 0 :format full)) ; no event logging
   (eglot-extend-to-xref t)              ; stay in eglot when jumping into deps
   :config
   (dolist (entry my/lsp-servers)
-    (let ((modes (ensure-list (car entry)))
-          (cmd (cdr entry)))
-      (when (executable-find (car cmd))
-        (add-to-list 'eglot-server-programs (cons modes cmd))
-        (dolist (mode modes)
-          (add-hook (intern (format "%s-hook" mode)) #'eglot-ensure))))))
+    (when (executable-find (cadr entry))
+      (add-to-list 'eglot-server-programs
+                   (cons (ensure-list (car entry)) (cdr entry))))))
+
+;; Hooks go in now so eglot itself only loads when a matching buffer opens
+(dolist (entry my/lsp-servers)
+  (when (executable-find (cadr entry))
+    (dolist (mode (ensure-list (car entry)))
+      (add-hook (intern (format "%s-hook" mode)) #'eglot-ensure))))
 
 ;;; Indentation per language
 (defvar my/indent-settings

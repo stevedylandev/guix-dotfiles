@@ -1,7 +1,5 @@
 ;;; init-jabber.el -*- lexical-binding: t; -*-
 
-(require 'auth-source-pass)
-
 ;; Built from git for OMEMO. Native module needs mbedtls 3.x headers, gcc,
 ;; make and pkg-config on PATH (4.x dropped mbedtls/aes.h).
 (use-package jabber
