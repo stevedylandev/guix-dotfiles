@@ -107,4 +107,47 @@ Keeps the current list if the fetch fails."
 (autoload 'uguu-upload-file "uguu" nil t)
 (autoload 'uguu-upload-clipboard "uguu" nil t)
 
+(defgroup openrouter nil
+  "OpenRouter backend for gptel."
+  :group 'gptel)
+
+(defcustom openrouter-pass-entry "openrouter/openrouter-api-key"
+  "Name of the `pass' entry holding the API key."
+  :type 'string
+  :group 'openrouter)
+
+(defun openrouter--api-key ()
+  "Return the OpenRouter API key from password-store."
+  (require 'auth-source-pass)       ; autoloaded in Emacs 28+, but cheap to be explicit
+  (let ((key (auth-source-pass-get 'secret openrouter-pass-entry)))
+    (or (and key (string-trim key))
+        (user-error "No pass entry `%s'" openrouter-pass-entry))))
+
+(use-package gptel
+  :defer t
+  :config
+  (setq gptel-backend
+        (gptel-make-openai "OpenRouter"
+          :host "openrouter.ai"
+          :endpoint "/api/v1/chat/completions"
+          :stream t
+          :key #'openrouter--api-key
+          :request-params '(:tools [(:type "openrouter:web_search")])
+          :models '(z-ai/glm-5.3
+                    z-ai/glm-5.3-flash
+                    z-ai/glm-5.3-flashx))))
+
+(defun gptel-model (model)
+  "Set the gptel model in the current buffer."
+  (interactive
+   (list (intern (completing-read "Model: "
+                                  '("z-ai/glm-5.3"
+                                    "z-ai/glm-5.3-flash"
+                                    "z-ai/glm-5.3-flashx")))))
+  (setq-local gptel-model model))
+
+(use-package markdown-mode
+  :defer t)
+
+
 (provide 'init-tools)
