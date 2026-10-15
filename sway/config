@@ -9,6 +9,7 @@ set $up k
 set $right l
 set $term kitty
 set $menu rofi -show drun
+seat * xcursor_theme Adwaita 24
 
 font pango:BerkeleyMono Nerd Font Mono 13
 

@@ -31,8 +31,11 @@
   (specifications->packages
    (list "python")))
 
+(define %theme-packages
+  (specifications->packages (list "adwaita-icon-theme")))
+
 (home-environment
- (packages (append %zsh-packages %lsp-packages %lang-packages))
+ (packages (append %zsh-packages %lsp-packages %lang-packages %theme-packages))
 
  (services
   (append
@@ -66,6 +69,16 @@
                ("tmux/tmux.conf" ,(local-file "tmux/tmux.conf"))
                ("gdb/gdbinit" ,%default-gdbinit)
                ("nano/nanorc" ,%default-nanorc)))
+
+    (simple-service 'cursor-theme home-environment-variables-service-type
+                    '(("XCURSOR_THEME" . "Adwaita")
+                      ("XCURSOR_SIZE" . "24")
+                      ("XCURSOR_PATH" . "$HOME/.guix-home/profile/share/icons")))
+
+    (simple-service 'cursor-default home-files-service-type
+                    `((".icons/default"
+                       ,(file-append (specification->package "adwaita-icon-theme")
+                                     "/share/icons/Adwaita"))))
 
     (service home-xdg-data-files-service-type
              `(("fonts/BerkeleyMonoNerdFontMono-Regular.ttf"
