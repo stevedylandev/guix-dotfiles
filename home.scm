@@ -5,9 +5,11 @@
              (gnu home services gnupg)
              (gnu home services xdg)
              (gnu packages)
+             (gnu packages guile)
              (gnu services)
              (gnu system shadow)
-             (guix gexp))
+             (guix gexp)
+             (guix packages))
 
 (define %zsh-packages
   (specifications->packages
@@ -19,13 +21,22 @@
          "tmux" "xdg-utils"
          "gnupg" "pinentry" "password-store")))
 
+(define guile-lsp-server/latest
+  (let ((base (specification->package "guile-lsp-server")))
+    (package
+     (inherit base)
+     (native-inputs (modify-inputs (package-native-inputs base)
+                                   (replace "guile" guile-3.0-latest)))
+     (propagated-inputs (modify-inputs (package-propagated-inputs base)
+                                       (replace "guile" guile-3.0-latest))))))
+
 (define %lsp-packages
-  (specifications->packages
-   (list "guile-lsp-server"
-         "rust-analyzer"
-         "gopls"
-         "lua-language-server"
-         "python-lsp-server")))
+  (cons guile-lsp-server/latest
+        (specifications->packages
+         (list "rust-analyzer"
+               "gopls"
+               "lua-language-server"
+               "python-lsp-server"))))
 
 (define %lang-packages
   (specifications->packages
