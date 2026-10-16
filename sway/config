@@ -37,7 +37,7 @@ bindsym $mod+b exec librewolf --scale=1.25
 # Window actions
 bindsym $mod+w kill
 bindsym $mod+f fullscreen toggle
-bindsym $mod+s sticky toggle
+bindsym $mod+s exec /home/stevedylandev/guix-dotfiles/scripts/screenshot.sh
 bindsym $mod+t splith
 bindsym $mod+v splitv
 bindsym $mod+e layout toggle split
