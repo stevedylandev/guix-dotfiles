@@ -1,0 +1,19 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "contact@stevedylan.dev",
+                "Name": "Steve"
+            }
+        ],
+        "Category": "",
+        "Description": "Darkmatter panels and widgets. Breeze artwork recolored by the Darkmatter color scheme.",
+        "EnabledByDefault": true,
+        "Id": "darkmatter",
+        "License": "MIT",
+        "Name": "Darkmatter",
+        "Version": "1.0",
+        "Website": "https://darkmattertheme.com"
+    },
+    "X-Plasma-API": "5.0"
+}

@@ -1,0 +1,18 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "contact@stevedylan.dev",
+                "Name": "Steve"
+            }
+        ],
+        "Category": "",
+        "Description": "Darkmatter colors, Plasma theme, and Breeze decorations.",
+        "Id": "dev.stevedylan.darkmatter",
+        "License": "MIT",
+        "Name": "Darkmatter",
+        "Version": "1.0",
+        "Website": "https://darkmattertheme.com"
+    }
+}
