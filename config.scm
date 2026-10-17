@@ -10,7 +10,8 @@
                      terminals version-control ncurses admin
                      compton lxde ssh golang docker containers xdisorg
                      rsync emacs base shells image-viewers librewolf
-                     tmux python video image node linux)
+                     tmux python video image node linux
+                     glib display-managers)
 
 (operating-system
  (host-name "benson")
@@ -63,6 +64,8 @@
                     git btop ncurses openssh rsync fastfetch tmux
                     ;; av
                     ffmpeg grim slurp pipewire wireplumber
+                    ;; plasma's session wrapper calls dbus-run-session from PATH
+                    dbus
                     ;; dev
                     go  python docker-cli node
                     (specification->package "cloudflared")) ; from Rosenthal channel
@@ -73,6 +76,8 @@
                     (service plasma-desktop-service-type)
                     (service sddm-service-type
                              (sddm-configuration
+                              ;; default is sddm-qt5; Plasma 6's breeze theme needs the qt6 greeter
+                              (sddm sddm)
                               (theme "breeze")))
                     ;; (service greetd-service-type
                     ;;               (greetd-configuration
@@ -90,10 +95,6 @@
                     ;;                        (command-args '())
                     ;;                        (xdg-session-type "wayland"))))))))))
                     ;; (service dhcpcd-service-type)
-                    (service network-manager-service-type)
-                    (service wpa-supplicant-service-type)
-                    (service dbus-root-service-type)
-                    (service elogind-service-type)
                     (service containerd-service-type)
                     (service docker-service-type)
                     (extra-special-file "/lib64/ld-linux-x86-64.so.2"
@@ -125,7 +126,10 @@
                               (authorized-keys
                                `(("stevedylandev"
                                   ,(local-file "/home/stevedylandev/.ssh/authorized_keys")))))))
-                   (modify-services %base-services
+                   ;; %desktop-services provides polkit, upower, udisks, NetworkManager,
+                   ;; elogind, dbus, etc. that Plasma expects; drop its default GDM.
+                   (modify-services %desktop-services
+                                    (delete gdm-service-type)
                                     (guix-service-type
                                      config => (guix-configuration
                                                 (inherit config)

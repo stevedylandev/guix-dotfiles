@@ -52,7 +52,6 @@
  (services
   (append
    (list
-    (service home-pipewire-service-type)
     (service home-zsh-service-type
              (home-zsh-configuration
               (zshrc (list (local-file "zsh/zshrc")))))
