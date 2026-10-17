@@ -4,6 +4,7 @@
              (gnu home services shells)
              (gnu home services gnupg)
              (gnu home services xdg)
+             (gnu home services sound)
              (gnu packages)
              (gnu packages guile)
              (gnu services)
@@ -51,6 +52,7 @@
  (services
   (append
    (list
+    (service home-pipewire-service-type)
     (service home-zsh-service-type
              (home-zsh-configuration
               (zshrc (list (local-file "zsh/zshrc")))))

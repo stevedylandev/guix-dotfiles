@@ -4,13 +4,13 @@
              (rosenthal services networking)
              (nongnu packages linux) (nongnu system linux-initrd))
 
-(use-service-modules base desktop xorg networking ssh docker dbus shepherd)
+(use-service-modules base desktop xorg networking ssh docker dbus shepherd sddm)
 
 (use-package-modules bootloaders wm window-management text-editors fonts
                      terminals version-control ncurses admin
                      compton lxde ssh golang docker containers xdisorg
                      rsync emacs base shells image-viewers librewolf
-                     tmux python video image node)
+                     tmux python video image node linux)
 
 (operating-system
  (host-name "benson")
@@ -60,62 +60,71 @@
                     ;; terminal emulator
                     kitty
                     ;; utils
-                    git btop ncurses openssh rsync
-                    fastfetch tmux ffmpeg grim slurp
+                    git btop ncurses openssh rsync fastfetch tmux
+                    ;; av
+                    ffmpeg grim slurp pipewire wireplumber
                     ;; dev
                     go  python docker-cli node
                     (specification->package "cloudflared")) ; from Rosenthal channel
                    %base-packages))
 
- (services (append (list (service greetd-service-type
-                                  (greetd-configuration
-                                   (terminals
-                                    (list
-                                     ;; Text login on tty7 that starts sway
-                                     (greetd-terminal-configuration
-                                      (terminal-vt "7")
-                                      (terminal-switch #t)
-                                      (default-session-command
-                                        (greetd-agreety-session
-                                         (command
-                                          (greetd-user-session
-                                           (command (file-append sway "/bin/sway"))
-                                           (command-args '())
-                                           (xdg-session-type "wayland"))))))))))
-                         (service dhcpcd-service-type)
-                         (service dbus-root-service-type)
-                         (service elogind-service-type)
-                         (service containerd-service-type)
-                         (service docker-service-type)
-                         (extra-special-file "/lib64/ld-linux-x86-64.so.2"
-                                             (file-append glibc "/lib/ld-linux-x86-64.so.2"))
-			                   (service tailscale-service-type)
-                         (simple-service 'cloudflared shepherd-root-service-type
-                                         (list (shepherd-service
-                                                (provision '(cloudflared))
-                                                (requirement '(networking))
-                                                (documentation "Run the Cloudflare tunnel.")
-                                                ;; 'networking' is up as soon as dhcpcd is spawned, before it has a
-                                                ;; lease, so cloudflared can exit at boot. Wait between respawns so
-                                                ;; it keeps retrying instead of hitting the respawn limit (5 in 7s)
-                                                ;; and getting disabled.
-                                                (respawn-delay 5)
-                                                (start #~(make-forkexec-constructor
-                                                          (list #$(file-append (specification->package "cloudflared")
-                                                                               "/bin/cloudflared")
-                                                                "tunnel" "--no-autoupdate" "run"
-                                                                "--token-file" "/etc/cloudflared/token")
-                                                          #:log-file "/var/log/cloudflared.log"))
-                                                (stop #~(make-kill-destructor)))))
-                         (service openssh-service-type
-                                  (openssh-configuration
-                                   (openssh openssh)
-                                   (port-number 22)
-                                   (permit-root-login #f)
-                                   (password-authentication? #f)
-                                   (authorized-keys
-                                    `(("stevedylandev"
-                                       ,(local-file "/home/stevedylandev/.ssh/authorized_keys")))))))
+ (services (append (list
+
+                    (service plasma-desktop-service-type)
+                    (service sddm-service-type
+                             (sddm-configuration
+                              (theme "breeze")))
+                    ;; (service greetd-service-type
+                    ;;               (greetd-configuration
+                    ;;                (terminals
+                    ;;                 (list
+                    ;;                  ;; Text login on tty7 that starts sway
+                    ;;                  (greetd-terminal-configuration
+                    ;;                   (terminal-vt "7")
+                    ;;                   (terminal-switch #t)
+                    ;;                   (default-session-command
+                    ;;                     (greetd-agreety-session
+                    ;;                      (command
+                    ;;                       (greetd-user-session
+                    ;;                        (command (file-append sway "/bin/sway"))
+                    ;;                        (command-args '())
+                    ;;                        (xdg-session-type "wayland"))))))))))
+                    ;; (service dhcpcd-service-type)
+                    (service network-manager-service-type)
+                    (service wpa-supplicant-service-type)
+                    (service dbus-root-service-type)
+                    (service elogind-service-type)
+                    (service containerd-service-type)
+                    (service docker-service-type)
+                    (extra-special-file "/lib64/ld-linux-x86-64.so.2"
+                                        (file-append glibc "/lib/ld-linux-x86-64.so.2"))
+			              (service tailscale-service-type)
+                    (simple-service 'cloudflared shepherd-root-service-type
+                                    (list (shepherd-service
+                                           (provision '(cloudflared))
+                                           (requirement '(networking))
+                                           (documentation "Run the Cloudflare tunnel.")
+                                           ;; 'networking' is up as soon as dhcpcd is spawned, before it has a
+                                           ;; lease, so cloudflared can exit at boot. Wait between respawns so
+                                           ;; it keeps retrying instead of hitting the respawn limit (5 in 7s)
+                                           ;; and getting disabled.
+                                           (respawn-delay 5)
+                                           (start #~(make-forkexec-constructor
+                                                     (list #$(file-append (specification->package "cloudflared")
+                                                                          "/bin/cloudflared")
+                                                           "tunnel" "--no-autoupdate" "run"
+                                                           "--token-file" "/etc/cloudflared/token")
+                                                     #:log-file "/var/log/cloudflared.log"))
+                                           (stop #~(make-kill-destructor)))))
+                    (service openssh-service-type
+                             (openssh-configuration
+                              (openssh openssh)
+                              (port-number 22)
+                              (permit-root-login #f)
+                              (password-authentication? #f)
+                              (authorized-keys
+                               `(("stevedylandev"
+                                  ,(local-file "/home/stevedylandev/.ssh/authorized_keys")))))))
                    (modify-services %base-services
                                     (guix-service-type
                                      config => (guix-configuration
