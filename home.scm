@@ -74,6 +74,7 @@
     (service home-xdg-configuration-files-service-type
              `(("starship.toml" ,(local-file "starship/starship.toml"))
                ("kitty/kitty.conf" ,(local-file "kitty/kitty.conf"))
+               ("fastfetch/config.jsonc", (local-file "fastfetch/config.jsonc"))
                ("sway/config" ,(local-file "sway/config"))
                ("qtile/config.py" ,(local-file "qtile/config.py"))
                ("rofi/config.rasi" ,(local-file "rofi/config.rasi"))
@@ -94,6 +95,17 @@
 
     (service home-xdg-data-files-service-type
              `(("fonts/BerkeleyMonoNerdFontMono-Regular.ttf"
-                ,(local-file "fonts/BerkeleyMonoNerdFontMono-Regular.ttf")))))
+                ,(local-file "fonts/BerkeleyMonoNerdFontMono-Regular.ttf"))
+               ("color-schemes/Darkmatter.colors" ,(local-file "kde/Darkmatter.colors"))
+               ("plasma/desktoptheme/darkmatter/metadata.json"
+                ,(local-file "kde/desktoptheme/darkmatter/metadata.json"))
+               ("plasma/desktoptheme/darkmatter/plasmarc"
+                ,(local-file "kde/desktoptheme/darkmatter/plasmarc"))
+               ("plasma/desktoptheme/darkmatter/colors"
+                ,(local-file "kde/Darkmatter.colors" "darkmatter-plasma-colors"))
+               ("plasma/look-and-feel/dev.stevedylan.darkmatter"
+                ,(local-file "kde/look-and-feel/dev.stevedylan.darkmatter" #:recursive? #t))
+               ("konsole/Darkmatter.colorscheme" ,(local-file "kde/konsole/Darkmatter.colorscheme"))
+               ("konsole/Darkmatter.profile" ,(local-file "kde/konsole/Darkmatter.profile")))))
 
    %base-home-services)))
