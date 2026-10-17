@@ -1,7 +1,4 @@
 # ~/.zshrc — managed by Guix Home (see home.scm)
-#
-# Ported from linux-dotfiles/zsh/dot-zshrc. Plugins and most CLI tools come
-# from the Guix Home profile rather than /usr/share or Homebrew.
 
 # Interactive-only guard
 case $- in
@@ -58,7 +55,7 @@ export BULLETS_FEEDS="feeds.stevedylan.dev/feed.xml"
 # export PNPM_HOME="$HOME/.local/share/pnpm"
 
 # bun
-# export BUN_INSTALL="$HOME/.bun"
+export BUN_INSTALL="$HOME/.bun"
 
 # Weather
 export NWS_LAT="35.0274115"
@@ -101,7 +98,7 @@ path_add() {
 
 # path_add "$HOME/.cargo/bin"
 path_add "$HOME/.local/share/go/bin"
-# path_add "$BUN_INSTALL/bin"
+path_add "$BUN_INSTALL/bin"
 # path_add "$HOME/.tmux/plugins/t-smart-tmux-session-manager/bin"
 # path_add "$HOME/.foundry/bin"
 path_add "$HOME/.local/share"
@@ -109,6 +106,7 @@ path_add "$HOME/.local/share"
 # path_add "$HOME/.local/share/fnm"
 # path_add "$PNPM_HOME"
 path_add "$HOME/.local/bin"
+path_add "$HOME/.bun/bin/"
 
 export PATH
 

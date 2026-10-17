@@ -10,7 +10,7 @@
                      terminals version-control ncurses admin
                      compton lxde ssh golang docker containers xdisorg
                      rsync emacs base shells image-viewers librewolf
-                     tmux python video image)
+                     tmux python video image node)
 
 (operating-system
  (host-name "benson")
@@ -63,7 +63,7 @@
                     git btop ncurses openssh rsync
                     fastfetch tmux ffmpeg grim slurp
                     ;; dev
-                    go  python docker-cli
+                    go  python docker-cli node
                     (specification->package "cloudflared")) ; from Rosenthal channel
                    %base-packages))
 
