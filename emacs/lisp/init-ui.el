@@ -1,7 +1,7 @@
 ;;; init-ui.el -*- lexical-binding: t; -*-
 
 (when (display-graphic-p)
-  (set-face-attribute 'default nil :family "BerkeleyMono Nerd Font Mono" :height 130))
+  (set-face-attribute 'default nil :family "BerkeleyMono Nerd Font Mono" :height 140))
 
 (use-package base16-theme)
 
